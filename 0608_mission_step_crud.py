@@ -3,13 +3,13 @@ import cx_Oracle
 def dept01_create():
     try:
         conn = cx_Oracle.connect(user="SCOTT", password="TIGER", dsn="xe")
+        cur = conn.cursor()
         try:
-            cur = conn.cursor()
             cur.execute('drop table dept01')
-            cur.execute('create table dept01 as select * from dept')
-            cur.execute('alter table dept01 add constraint dept01_uk_deptno unique(deptno)')
         except Exception as e:
             print(e)
+            cur.execute('create table dept01 as select * from dept')
+            cur.execute('alter table dept01 add constraint dept01_uk_deptno unique(deptno)')
         finally:
             cur.close()
     except Exception as e:
